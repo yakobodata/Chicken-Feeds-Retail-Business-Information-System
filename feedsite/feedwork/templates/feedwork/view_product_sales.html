@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>
+		View Products
+	</title>
+    <style type="text/css">
+        table, th, td {
+  border: 1px solid black;
+
+}
+    </style>
+</head>
+<body>
+<h1>View Product Sales</h1>
+    <form action="{% url 'view_product_sales' %}" method="post">
+                {% csrf_token %}
+                <!-- <label>Childid</label>
+                <input name="child" type="text" required placeholder="Childid..."><br/><br/> -->
+                <label>From</label>
+                <input name="start_date" type="date" ><br/><br/>
+                <label>To</label>
+                <input name="end_date" type="date" ><br/><br/> 
+                <br/>
+                <label for="raw_material_name">Raw Material:</label>
+
+                        <select name="product" id="product_name">
+                            {% for name in input_names %} 
+                                <option value={{ name.product_name }}>{{ name.product_name }}</option>
+                            {% endfor %}  
+                        </select>  
+                <input type="submit" name="submit" value="Search"/>                
+    </form>
+
+     <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
+                    <ul>
+        
+                    <tr>
+                        <th>Id</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                       
+                    </tr>
+                    {% for sale in sales %}
+                    <tr>
+                        <td>{{ sale.id}} </td>
+                        <td>{{ sale.date }} </td>
+                        <th>{{ sale.time }}
+                        <td>{{ sale.product_name }}</td>
+                        <td>{{ sale.quantity }}</td>
+                        
+                        <td><a href="../update_product_sales/?id={{ sale.id }}">Update</a></td>
+                        <td><a href="../delete_product_sales/?id={{ sale.id }}">Delete</a></td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+
+               
+</body>
+<a href="{% url 'index' %}"><p>Home</p></a><br/>
+<center>
+
+     <footer>
+  <p>Developed by Wamani Jacob  Email:nicobwan@gmail.com 0770594160 ,  0752055172 </p>
+  <p></p>
+</footer> 
+
+</center>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>
+		View Products
+	</title>
+    {% load supply_extras %}
+    <style type="text/css">
+        table, th, td {
+  border: 1px solid black;
+
+}
+input[type=submit] {
+  width: 100%;
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+    </style>
+</head>
+<body>
+<h1>View Product</h1>
+    <form action="{% url 'view_products' %}" method="post">
+                {% csrf_token %}
+                <label>From</label>
+                <input name="start_date" type="date" ><br/><br/>
+                <labe>To</labe>
+                <input name="end_date" type="date" ><br/><br/>
+
+                  <label for="product">Product</label>
+
+                        <select name="product" id="product_name">
+                            {% for name in input_names %} 
+                                <option value={{ name.product_name }}>{{ name.product_name }}</option>
+                            {% endfor %}  
+                        </select>  
+                
+
+                <input type="submit" name="submit" value="Search"/>                
+    </form>
+
+     <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
+                    <ul>
+        <!-- maize_bran,cotton,sun_flower,fish,salt,general_purpose_premix,layers_premix ,shells 
+        meat_boaster ,egg_boaster  -->
+                    <tr>
+                        <th>Product Id</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Cost of Production Per Kg</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                       
+                    </tr>
+                    {% for item in product %}
+                    <tr>
+                        <td>{{ item.id}} </td>
+                        <td>{{ item.date }} </td>
+                        <th>{{ item.time }}
+                        <td>{{ item.product_name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.date|cost_price_of_product:item.product_name.product_name}}</td>
+                        <td><a href="../update_products/?id={{ item.id }}">Update</a></td>
+                        <td><a href="../delete_products/?id={{ item.id }}">Delete</a></td>
+
+                    </tr>
+                    {% endfor %}
+                
+                </table>
+       
+</body>
+<a href="{% url 'index' %}"><p>Home</p></a><br/>
+<center>
+
+     <footer>
+  <p>Developed by Wamani Jacob  Email:nicobwan@gmail.com 0770594160 ,  0752055172 </p>
+  <p></p>
+</footer> 
+
+</center>
+
+</html>
